@@ -1,6 +1,8 @@
 # LevelDB JNI
 ## Installation
 
+Make sure that you have built the shared library in the ${YOUR_LEVELDB_HOME}/build.
+
 ```shell
 cmake -DLEVELDB_HOME=YOUR_LEVELDB_HOME .
 cmake --build .
