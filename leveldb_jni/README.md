@@ -21,6 +21,5 @@ java -cp ../leveldb_jni.jar  -Djava.library.path=../ Test.java
 If it can not find the libleveldb.so, try the following commands.
 
 ```shell
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${LEVELDB_HOME}/build
-export LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${LEVELDB_HOME}/build
 ```
