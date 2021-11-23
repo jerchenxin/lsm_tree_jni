@@ -16,3 +16,11 @@ It will generate two target files which are "libleveldb_jni.so" and "leveldb_jni
 cd src
 java -cp ../leveldb_jni.jar  -Djava.library.path=../ Test.java
 ```
+
+## Notice
+If it can not find the libleveldb.so, try the following commands.
+
+```shell
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${LEVELDB_HOME}/build
+export LD_LIBRARY_PATH
+```
