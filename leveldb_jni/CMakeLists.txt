@@ -50,10 +50,10 @@ ADD_CUSTOM_COMMAND(TARGET leveldb_jni POST_BUILD
 install(
   TARGETS leveldb_jni
   EXPORT leveldb_jniTargets
-  LIBRARY DESTINATION lib  
-  ARCHIVE DESTINATION lib  
-  RUNTIME DESTINATION bin  
-  PUBLIC_HEADER DESTINATION include  
+  LIBRARY DESTINATION /usr/lib  
+  ARCHIVE DESTINATION /usr/lib  
+  RUNTIME DESTINATION /usr/bin  
+  PUBLIC_HEADER DESTINATION /usr/include  
 )
 
 install(
