@@ -45,3 +45,18 @@ ADD_CUSTOM_COMMAND(TARGET leveldb_jni POST_BUILD
 
 
 # java -cp ../leveldb_jni.jar  -Djava.library.path=../ Test.java
+
+
+install(
+  TARGETS leveldb_jni
+  EXPORT leveldb_jniTargets
+  LIBRARY DESTINATION lib  
+  ARCHIVE DESTINATION lib  
+  RUNTIME DESTINATION bin  
+  PUBLIC_HEADER DESTINATION include  
+)
+
+install(
+  EXPORT leveldb_jniTargets
+  DESTINATION "lib/cmake/${PROJECT_NAME}"
+)
