@@ -7,7 +7,7 @@
 
 
 #define DISK_SIZE           (1024 * 1024 * 1024 * 1) // 1GB
-
+#define KEY_SIZE_FIXED  24
 
 /*
  * Class:     com_xchen_HashKV
@@ -131,19 +131,13 @@ JNIEXPORT jobject JNICALL Java_com_xchen_HashKV_scan(JNIEnv* env, jobject thisOb
     std::string keyStr((char *)ptr, env->GetArrayLength(startingKey));
     env->ReleaseByteArrayElements(startingKey, ptr, 0);
     auto c_key = keyStr.c_str();
-    // char c_key[24];
-    // for (auto i=0;i<keyStr.size();i++) {
-    //     c_key[i] = keyStr[i];
-    // }
 
     std::vector<char*> keys;
     std::vector<char*> values;
     std::vector<len_t> valueSize;
     KvServer* kvserver = (KvServer*) dbRef;
     kvserver->flushBuffer(); // it needs to flush the buffer before range query
-    // kvserver->getRangeValues(c_key, numKeys, keys, values, valueSize);
     kvserver->getRangeValues(const_cast<char*>(c_key), numKeys, keys, values, valueSize);
-    // printf("output keys num: %d\n", keys.size());
 
     jclass retClass = env->FindClass("com/xchen/HashKV$KVPair");
     jmethodID initFunID = env->GetMethodID(retClass, "<init>", "(Lcom/xchen/HashKV;)V");
@@ -153,9 +147,9 @@ JNIEXPORT jobject JNICALL Java_com_xchen_HashKV_scan(JNIEnv* env, jobject thisOb
     jobjectArray j_values = env->NewObjectArray(keys.size(), env->FindClass("java/lang/String"), NULL);
 
     for (auto i=0;i<keys.size();i++) {
-        jstring tmpKeyString = env->NewStringUTF(keys[i]);
+        std::string tmpKey = string(keys[i], KEY_SIZE_FIXED);
+        jstring tmpKeyString = env->NewStringUTF(tmpKey.c_str());
         env->SetObjectArrayElement(j_keys, i, tmpKeyString);
-
 
         std::string tmp = string(values[i], valueSize[i]);
         jstring tmpValueString = env->NewStringUTF(tmp.c_str());
